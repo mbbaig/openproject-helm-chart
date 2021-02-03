@@ -36,10 +36,14 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# Extra environment variables to be attached to the container
+extraEnvs: {}
+
 service:
   type: LoadBalancer
   port: 8080
   annotations: {}
+  loadBalancerIP: ""
 
 ingress:
   enabled: false
