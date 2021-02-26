@@ -88,9 +88,14 @@ persistence:
   accessMode: ReadWriteOnce
   size: 48Gi
 
+# postgresqlHost, postgresqlPort, postgresqlUser only used if using external postgres.
 postgresql:
+  enabled: true
   persistence:
     enabled: true
     size: 15G
+  postgresqlHost: ""
+  postgresqlPort: ""
   postgresqlPassword: superSecrectPassword
+  postgresqlUser: ""
   postgresqlDatabase: openproject
