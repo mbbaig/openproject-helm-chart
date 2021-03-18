@@ -34,8 +34,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+          {{- if .Values.extraEnvs }}
+          {{- toYaml .Values.extraEnvs | nindent 10 }}
+          {{- end }}
+          {{- if .Values.postgresql.enabled }}
           - name: DATABASE_URL
             value: "postgresql://postgres:{{ .Values.postgresql.postgresqlPassword }}@{{ include "openproject-helm-chart.postgresql.fullname" . }}:5432/{{ .Values.postgresql.postgresqlDatabase }}"
+          {{- else }}
+          - name: DATABASE_URL
+            value: "postgresql://{{ .Values.postgresql.postgresqlUser }}:{{ .Values.postgresql.postgresqlPassword }}@{{ .Values.postgresql.postgresqlHost }}:{{ .Values.postgresql.postgresqlPort }}/{{ .Values.postgresql.postgresqlDatabase }}"
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080

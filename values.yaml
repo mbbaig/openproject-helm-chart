@@ -36,9 +36,14 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# Extra environment variables to be attached to the container
+extraEnvs: {}
+
 service:
   type: LoadBalancer
   port: 8080
+  annotations: {}
+  loadBalancerIP: ""
 
 ingress:
   enabled: false
@@ -83,9 +88,14 @@ persistence:
   accessMode: ReadWriteOnce
   size: 48Gi
 
+# postgresqlHost, postgresqlPort, postgresqlUser only used if using external postgres.
 postgresql:
+  enabled: true
   persistence:
     enabled: true
     size: 15G
+  postgresqlHost: ""
+  postgresqlPort: ""
   postgresqlPassword: superSecrectPassword
+  postgresqlUser: ""
   postgresqlDatabase: openproject
